@@ -1,0 +1,207 @@
+1. **Concepts & Definitions**
+2. **Real-time Examples**
+3. **Key Commands**
+4. **Top 10 Interview Questions & Answers**
+5. **Important Topics with Detailed Solutions**
+
+---
+
+## 🧠 1. What is Kubernetes?
+
+**Kubernetes (K8s)** is an open-source container orchestration platform for automating:
+
+* Deployment
+* Scaling
+* Management
+* Networking
+* Health monitoring of containerized applications
+
+It works with container technologies like **Docker**.
+
+---
+
+## 🧠 2. What is Minikube?
+
+**Minikube** is a tool that runs a **single-node Kubernetes cluster locally** on your machine. It’s mainly used for:
+
+* Learning and development
+* Testing Kubernetes apps before deploying to real clusters
+
+---
+
+## 🧠 3. What is kubectl?
+
+**kubectl** is the CLI tool to interact with a Kubernetes cluster.
+You use it to:
+
+* Deploy applications
+* View logs
+* Scale services
+* Debug issues
+* Access resources (pods, deployments, etc.)
+
+---
+
+## 🛠️ 4. Example Workflow
+
+### ✅ Setup:
+
+```bash
+minikube start                     # Start your local Kubernetes cluster
+kubectl version --client           # Check kubectl version
+kubectl cluster-info               # Get cluster info
+kubectl get nodes                  # View the single Minikube node
+```
+
+### ✅ Deploy an App:
+
+```bash
+kubectl create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+kubectl expose deployment hello-node --type=NodePort --port=8080
+minikube service hello-node        # Open the service in browser
+```
+
+---
+
+## 🧪 5. Important kubectl Commands (Interview Ready)
+
+| Task                 | Command                                            |
+| -------------------- | -------------------------------------------------- |
+| View pods            | `kubectl get pods`                                 |
+| View deployments     | `kubectl get deployments`                          |
+| Scale deployment     | `kubectl scale deployment hello-node --replicas=3` |
+| Delete deployment    | `kubectl delete deployment hello-node`             |
+| View logs            | `kubectl logs <pod-name>`                          |
+| Exec into pod        | `kubectl exec -it <pod-name> -- /bin/bash`         |
+| Apply YAML file      | `kubectl apply -f deployment.yaml`                 |
+| Delete via YAML      | `kubectl delete -f deployment.yaml`                |
+| Describe pod details | `kubectl describe pod <pod-name>`                  |
+
+---
+
+## 🎯 6. Top 10 Kubernetes Interview Questions (with Answers)
+
+### 1. **What is Kubernetes?**
+
+A container orchestration tool to manage containerized applications at scale across clusters of hosts.
+
+---
+
+### 2. **What are pods in Kubernetes?**
+
+The smallest deployable unit. A pod can have one or more containers that share the same network and storage.
+
+---
+
+### 3. **What is the difference between Deployment and StatefulSet?**
+
+* **Deployment**: Used for stateless apps.
+* **StatefulSet**: Used for stateful apps (like databases), with stable identities and persistent storage.
+
+---
+
+### 4. **What is a Service in Kubernetes?**
+
+A Service exposes a set of pods as a network service. Types: ClusterIP, NodePort, LoadBalancer.
+
+---
+
+### 5. **What is a ReplicaSet?**
+
+It ensures a specified number of pod replicas are running at all times.
+
+---
+
+### 6. **Explain the role of etcd.**
+
+A consistent and highly-available key-value store for all Kubernetes cluster data.
+
+---
+
+### 7. **How does Kubernetes handle load balancing?**
+
+Using Services with built-in kube-proxy for distributing traffic to backend pods.
+
+---
+
+### 8. **How do you update a running application?**
+
+By editing the deployment:
+
+```bash
+kubectl set image deployment/hello-node hello-node=myimage:v2
+```
+
+---
+
+### 9. **What is the purpose of kube-scheduler and kube-controller-manager?**
+
+* **kube-scheduler**: Assigns pods to nodes.
+* **kube-controller-manager**: Runs controllers like node, replication, endpoints.
+
+---
+
+### 10. **Difference between ConfigMap and Secret?**
+
+* **ConfigMap**: Stores non-sensitive configuration data.
+* **Secret**: Stores sensitive data like passwords, encoded in base64.
+
+---
+
+## 🔥 7. Important Topics with Detailed Explanation
+
+| Topic                  | Summary                      | Key Concepts                      |
+| ---------------------- | ---------------------------- | --------------------------------- |
+| **Pods**               | Smallest Kubernetes object   | Container(s), shared IP/storage   |
+| **Deployments**        | Declarative updates for Pods | Rollbacks, rolling updates        |
+| **Services**           | Exposes pods to network      | Types: ClusterIP, NodePort        |
+| **Volumes**            | Persistent storage           | `emptyDir`, `hostPath`, `PVC`     |
+| **Namespaces**         | Virtual cluster partitioning | Useful in multi-tenant clusters   |
+| **ConfigMaps/Secrets** | External config injection    | Use in Env/Volumes                |
+| **Helm**               | Kubernetes package manager   | Helm Charts                       |
+| **Ingress**            | External access to services  | Reverse proxy, Load Balancer      |
+| **StatefulSets**       | Stateful applications        | Persistent storage + identity     |
+| **Probes**             | Pod health checks            | `readinessProbe`, `livenessProbe` |
+
+---
+
+## 📁 8. Sample YAML Deployment File
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-node
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-node
+  template:
+    metadata:
+      labels:
+        app: hello-node
+    spec:
+      containers:
+      - name: hello-node
+        image: k8s.gcr.io/echoserver:1.4
+        ports:
+        - containerPort: 8080
+```
+
+Command to deploy:
+
+```bash
+kubectl apply -f hello-deployment.yaml
+```
+
+---
+
+## 📚 9. Further Learning Resources
+
+* [Kubernetes Official Docs](https://kubernetes.io/docs/home/)
+* [Minikube Docs](https://minikube.sigs.k8s.io/docs/)
+* [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+* [Play with Kubernetes (Free Lab)](https://labs.play-with-k8s.com/)
+
+---
